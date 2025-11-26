@@ -33,16 +33,29 @@ def read_batch_file(file_path):
         images.append(Image(label, pixels))
     return images
 
-path = 'cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
-images = read_batch_file(path)
+def read_cropped_normalized_batch(file_path):
+    with open(file_path, 'rb') as f:
+        byte_data = f.read()
+    image_size = 1729  
+    num_images = len(byte_data) // image_size
+    images = []
 
-#Display the image using matplotlib recive image in command line argument
-#import sys
-#import matplotlib.pyplot as plt
-#nb = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-
-#first_image_pixels = images[nb].pixels
-#plt.imshow(first_image_pixels)
-#plt.title(f'Label: {images[nb].label}')
-#plt.axis('off')
-#plt.show()
+    for i in range(num_images):
+        start = i * image_size
+        label = byte_data[start]
+        red = byte_data[start + 1:start + 577]
+        green = byte_data[start + 577:start + 1153]
+        blue = byte_data[start + 1153:start + 1729]
+        
+        pixels = []
+        for row in range(24):
+            pixel_row = []
+            for col in range(24):
+                r = red[row * 24 + col]
+                g = green[row * 24 + col]
+                b = blue[row * 24 + col]
+                pixel_row.append((r, g, b))
+            pixels.append(pixel_row)
+        
+        images.append(Image(label, pixels))
+    return images
