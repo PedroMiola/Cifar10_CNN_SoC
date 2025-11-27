@@ -4,7 +4,6 @@ import read_coeff
 import sys
 import matplotlib.pyplot as plt
 import image_crop_and_normalize as icn
-import copy
 
 nb = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 path = '../cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
@@ -33,7 +32,7 @@ if all_images:
         count += 1
         if count > 100:
             break
-    print(f"Total images: {count}, Errors: {error}, Error Rate: {error/count*100:.2f}%")
+    print(f"Total images: {count}, Errors: {error}, Error Rate: {error/count*100:.2f}% Success Rate: {(count - error)/count*100:.2f}%")
 else:
     # Print only original image
     cropped_normalized_image = icn.crop_and_normalize_image(images[nb])

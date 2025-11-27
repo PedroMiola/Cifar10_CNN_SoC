@@ -23,6 +23,11 @@ def convolve2d(matrix, kernel):
                     mj = col + kj - pad_width
                     if 0 <= mi < matrix_height and 0 <= mj < matrix_width:
                         conv_sum += matrix[mi][mj] * kernel[ki][kj]
+                    # Mirror padding in the borders mirror the closest value
+                    else:
+                        mi = min(max(mi, 0), matrix_height - 1)
+                        mj = min(max(mj, 0), matrix_width - 1)
+                        conv_sum += matrix[mi][mj] * kernel[ki][kj]
             output_matrix[row][col] = conv_sum 
     return output_matrix    
             
@@ -83,19 +88,20 @@ def apply_convolution_to_image(image, kernel):
 
 # Apply a simple edge detection convolution to an image's pixel data
 def apply_convolution_to_image(image):
-    #edge_detection_kernel = [
-    #    [1/16, 2/16, 1/16],
-    #    [2/16,  4/16, 2/16],
-    #    [1/16, 2/16, 1/16]
-    #]
-    # 5x5 Gaussian blur kernel
-    gaussian_blur_kernel = [
-        [1/273, 4/273, 6/273, 4/273, 1/273],
-        [4/273,16/273,24/273,16/273, 4/273],
-        [6/273,24/273,36/273,24/273, 6/273],
-        [4/273,16/273,24/273,16/273, 4/273],
-        [1/273, 4/273, 6/273, 4/273, 1/273]
+    edge_detection_kernel = [
+        [0, -1, 0],
+        [-1,  5, -1],
+        [0, -1, 0]
     ]
+    gaussian_blur_kernel = edge_detection_kernel
+    # 5x5 Gaussian blur kernel
+    #gaussian_blur_kernel = [
+    #    [1/273, 4/273, 6/273, 4/273, 1/273],
+    #    [4/273,16/273,24/273,16/273, 4/273],
+    #    [6/273,24/273,36/273,24/273, 6/273],
+    #    [4/273,16/273,24/273,16/273, 4/273],
+    #    [1/273, 4/273, 6/273, 4/273, 1/273]
+    #]
     
     height = len(image.pixels)
     width = len(image.pixels[0])

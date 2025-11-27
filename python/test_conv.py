@@ -1,6 +1,6 @@
 #test the convultion function with the image_reader.py
 from image_reader import read_batch_file
-from python.convolution import apply_convolution_to_image, apply_indenty_matrix
+from convolution import apply_convolution_to_image, apply_indenty_matrix
 import sys
 import matplotlib.pyplot as plt
 
