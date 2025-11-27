@@ -22,6 +22,37 @@ def convolve2d(matrix, kernel):
     return output_matrix    
             
 
+def convolve3d_4d(matrix, kernel, bias):
+    m_height = len(matrix)
+    m_width = len(matrix[0])
+    m_depth = len(matrix[0][0])
+    k_n = len(kernel)
+    k_m = len(kernel[0])
+    k_l = len(kernel[0][0])
+    k_c = len(kernel[0][0][0])
+    # Output matrix shape will be (m_height, m_width, k_c)
+    output_matrix = [[[0 for _ in range(k_c)] for _ in range(m_width)] for _ in range(m_height)]
+
+    for c in range(k_c):
+        matrix_sum = [[0 for _ in range(m_width)] for _ in range(m_height)] 
+        for channel in range(m_depth):
+            channel_matrix = [[matrix[i][j][channel] for j in range(m_width)] for i in range(m_height)]
+            # Kernal shape is (k_n, k_m, k_l, k_c) we want to convolve with the kernal that the height and width are k_n and k_m 
+            convoluted_channel = convolve2d(channel_matrix, [[kernel[i][j][channel][c] for j in range(k_m)] for i in range(k_n)])
+            for i in range(m_height):
+                for j in range(m_width):
+                    matrix_sum[i][j] += convoluted_channel[i][j]
+        
+        for i in range(m_height):
+            for j in range(m_width):
+                matrix_sum[i][j] += bias[c]
+                output_matrix[i][j][c] = matrix_sum[i][j]
+                
+    return output_matrix
+
+        
+
+
 def apply_convolution_to_image(image, kernel):
     height = len(image.pixels)
     width = len(image.pixels[0])
@@ -44,7 +75,6 @@ def apply_convolution_to_image(image, kernel):
                     convoluted_pixels[i][j] = (r, g, value)
     
     return convoluted_pixels    
-
 
 # Apply a simple edge detection convolution to an image's pixel data
 def apply_convolution_to_image(image):

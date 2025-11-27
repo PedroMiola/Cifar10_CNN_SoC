@@ -135,13 +135,13 @@ def _write_nested_list(f, nested_list, indent_level):
         f.write(f"{indent}{nested_list}\n")
         
 # Example usage:
-#path = '../cifar10_coeffs/CNN_coeff_3x3.txt'
-#results = read_coefficients(path, as_numpy=False)
-#for tensor_name, coefficients in results:
-#    print(f'Tensor Name: {tensor_name}')
-#    print(f'Shape: {_get_shape(coefficients)}')
-#    print(f'Coefficients: {coefficients[:10]}...')  # Print first 10 coefficients for brevity
-#
+path = '../cifar10_coeffs/CNN_coeff_3x3.txt'
+results = read_coefficients(path, as_numpy=False)
+for tensor_name, coefficients in results:
+    print(f'Tensor Name: {tensor_name}')
+    print(f'Shape: {_get_shape(coefficients)}')
+    #print(f'Coefficients: {coefficients[:10]}...')  # Print first 10 coefficients for brevity
+
 #write_coefficients_path = 'output_coefficients.txt'
 #coefficients_dict = {
 #    tensor_name: coefficients
