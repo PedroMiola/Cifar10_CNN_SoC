@@ -1,3 +1,8 @@
+def relu(x):
+    if x < 0:
+        return 0
+    return x
+
 # Receives a 2D matrix and a kernel, performs convolution, and returns the resulting matrix without numpy
 def convolve2d(matrix, kernel):
     kernel_height = len(kernel)
@@ -46,7 +51,7 @@ def convolve3d_4d(matrix, kernel, bias):
         for i in range(m_height):
             for j in range(m_width):
                 matrix_sum[i][j] += bias[c]
-                output_matrix[i][j][c] = matrix_sum[i][j]
+                output_matrix[i][j][c] = relu(matrix_sum[i][j])
                 
     return output_matrix
 

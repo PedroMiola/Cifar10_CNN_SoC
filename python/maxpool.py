@@ -13,12 +13,3 @@ def maxpool(matrix, size, stride):
 
     return out
 
-
-m = [
-    [1, 3, 2, 1],
-    [4, 6, 5, 2],
-    [7, 8, 9, 4],
-    [1, 2, 0, 3]
-]
-
-print(maxpool(m, size=2, stride=2))

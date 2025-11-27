@@ -24,9 +24,10 @@ axes[1].axis('off')
 plt.tight_layout()
 plt.show()
 
-print("Original Pixels (first 5x5):")
-for row in first_image.pixels[:5]:
-    print(row[:5])
-print("\nCropped & Normalized Pixels (first 5x5):")
-for row in first_image_normalized.pixels[:5]:
-    print(row[:5])  
+# Print middle 5x5 pixels of original and normalized images
+print("Original Image Middle 5x5 Pixels:")
+for row in range(12, 17):
+    print(first_image.pixels[row][12:17])
+print("\nCropped & Normalized Image Middle 5x5 Pixels:")
+for row in range(12, 17):
+    print(first_image_normalized.pixels[row][12:17])

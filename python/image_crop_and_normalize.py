@@ -5,25 +5,25 @@ def crop_and_normalize_image(image):
     
     # Normalize pixel values
     normalized_pixels = []
-    number_of_pixels = 24 * 24
+    number_of_pixels = 24 * 24 * 3
     normalized_pixels_red_pixels = []
     normalized_pixels_green_pixels = []
     normalized_pixels_blue_pixels = []
+    total_sum = sum(cropped_pixels[row][col][color] for row in range(24) for col in range(24) for color in range(3))
+    total_mean = total_sum / number_of_pixels
+    total_squared_diff_sum = sum((cropped_pixels[row][col][color] - total_mean) ** 2 for row in range(24) for col in range(24) for color in range(3))
+    total_stddev = (total_squared_diff_sum / number_of_pixels) ** 0.5
+    total_div = max(total_stddev, 1.0 / (number_of_pixels ** 0.5))
+    #print(f"Overall: mean={total_mean}, stddev={total_stddev}, div={total_div}")
     
-    for color in range(3):
-        channel_sum = sum(cropped_pixels[row][col][color] for row in range(24) for col in range(24))
-        channel_mean = channel_sum / number_of_pixels
-        channel_squared_diff_sum = sum((cropped_pixels[row][col][color] - channel_mean) ** 2 for row in range(24) for col in range(24))
-        channel_stddev = (channel_squared_diff_sum / number_of_pixels) ** 0.5
-        channel_div = max(channel_stddev, 1.0 / (number_of_pixels ** 0.5))
-        print(f"Channel {color}: mean={channel_mean}, stddev={channel_stddev}, div={channel_div}")
-        if color == 0:
-            normalized_pixels_red_pixels = [(cropped_pixels[row][col][0] - channel_mean) / channel_div for row in range(24) for col in range(24)]
-        elif color == 1:
-            normalized_pixels_green_pixels = [(cropped_pixels[row][col][1] - channel_mean) / channel_div for row in range(24) for col in range(24)]
-        else:
-            normalized_pixels_blue_pixels = [(cropped_pixels[row][col][2] - channel_mean) / channel_div for row in range(24) for col in range(24)]
-
+    for row in range(24):
+        for col in range(24):
+            r = (cropped_pixels[row][col][0] - total_mean) / total_div
+            g = (cropped_pixels[row][col][1] - total_mean) / total_div
+            b = (cropped_pixels[row][col][2] - total_mean) / total_div
+            normalized_pixels_red_pixels.append(r)
+            normalized_pixels_green_pixels.append(g)
+            normalized_pixels_blue_pixels.append(b)
     for i in range(24):
         row = []
         for j in range(24):
