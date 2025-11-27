@@ -22,14 +22,7 @@ def convolve2d(matrix, kernel):
     return output_matrix    
             
 
-# Apply a simple edge detection convolution to an image's pixel data
-def apply_convolution_to_image(image):
-    edge_detection_kernel = [
-        [0, -1, 0],
-        [-1,  5, -1],
-        [0, -1, 0]
-    ]
-    
+def apply_convolution_to_image(image, kernel):
     height = len(image.pixels)
     width = len(image.pixels[0])
     convoluted_pixels = [[(0, 0, 0) for _ in range(width)] for _ in range(height)]
@@ -37,7 +30,7 @@ def apply_convolution_to_image(image):
     for channel in range(3):
         channel_matrix = [[image.pixels[i][j][channel] for j in range(width)] for i in range(height)]
         
-        convoluted_channel = convolve2d(channel_matrix, edge_detection_kernel)
+        convoluted_channel = convolve2d(channel_matrix, kernel)
         
         for i in range(height):
             for j in range(width):
@@ -50,13 +43,68 @@ def apply_convolution_to_image(image):
                 else:
                     convoluted_pixels[i][j] = (r, g, value)
     
+    return convoluted_pixels    
+
+
+# Apply a simple edge detection convolution to an image's pixel data
+def apply_convolution_to_image(image):
+    #edge_detection_kernel = [
+    #    [1/16, 2/16, 1/16],
+    #    [2/16,  4/16, 2/16],
+    #    [1/16, 2/16, 1/16]
+    #]
+    # 5x5 Gaussian blur kernel
+    gaussian_blur_kernel = [
+        [1/273, 4/273, 6/273, 4/273, 1/273],
+        [4/273,16/273,24/273,16/273, 4/273],
+        [6/273,24/273,36/273,24/273, 6/273],
+        [4/273,16/273,24/273,16/273, 4/273],
+        [1/273, 4/273, 6/273, 4/273, 1/273]
+    ]
+    
+    height = len(image.pixels)
+    width = len(image.pixels[0])
+    convoluted_pixels = [[(0, 0, 0) for _ in range(width)] for _ in range(height)]
+    
+    for channel in range(3):
+        channel_matrix = [[image.pixels[i][j][channel] for j in range(width)] for i in range(height)]
+        
+        convoluted_channel = convolve2d(channel_matrix, gaussian_blur_kernel)
+        
+        for i in range(height):
+            for j in range(width):
+                value = convoluted_channel[i][j]
+                # Check if value is floating point and convert to int
+                if isinstance(value, float):
+                    value = int(value)       
+                r, g, b = convoluted_pixels[i][j]
+                if channel == 0:
+                    convoluted_pixels[i][j] = (value, g, b)
+                elif channel == 1:
+                    convoluted_pixels[i][j] = (r, value, b)
+                else:
+                    convoluted_pixels[i][j] = (r, g, value)
+    
     return convoluted_pixels
 
 def apply_indenty_matrix(image):
+
+    #identity_kernel = [
+    #    [0, 0, 0],
+    #    [0, 1, 0],
+    #    [0, 0, 0]
+    #]
+    # A 9x9 identity kernel
     identity_kernel = [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
     
     height = len(image.pixels)

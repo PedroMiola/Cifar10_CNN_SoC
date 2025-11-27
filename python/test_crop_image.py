@@ -4,13 +4,15 @@ import matplotlib.pyplot as plt
 import sys
 
 nb = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-path = 'cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
+path = '../cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
 images = image_reader.read_batch_file(path)
 first_image = images[nb]
-output_path = 'cropped_normalized_image.bin'
-image_crop_and_normalize.save_batch_of_cropped_and_normalized_images(images, output_path)
-normalized_images = image_reader.read_cropped_normalized_batch(output_path)
-first_image_normalized = normalized_images[nb]
+output_path = '../cifar-10-binary/cifar-10-batches-bin/cropped_normalized_image.bin'
+#image_crop_and_normalize.save_batch_of_cropped_and_normalized_images(images, output_path)
+#normalized_images = image_reader.read_cropped_normalized_batch(output_path)
+#first_image_normalized = normalized_images[nb]
+first_image_normalized = image_crop_and_normalize.crop_and_normalize_image(first_image)
+
 # Plot the original and cropped normalized images for comparison
 fig, axes = plt.subplots(1, 2, figsize=(10, 5))
 axes[0].imshow(first_image.pixels)

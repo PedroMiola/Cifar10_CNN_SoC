@@ -4,7 +4,7 @@ from convulution import apply_convolution_to_image, apply_indenty_matrix
 import sys
 import matplotlib.pyplot as plt
 
-path = 'cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
+path = '../cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
 images = read_batch_file(path)
 nb = int(sys.argv[1]) if len(sys.argv) > 1 else 0
 first_image = images[nb]
