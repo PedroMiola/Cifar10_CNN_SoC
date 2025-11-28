@@ -1,4 +1,5 @@
 from image_reader import Image
+import struct
 
 def crop_and_normalize_image(image):
     cropped_pixels = [row[4:28] for row in image.pixels[4:28]]
@@ -42,15 +43,38 @@ def save_croped_and_normalized_image(image, file_path):
             for row in normalized_pixels:
                 for pixel in row:
                     value = int(pixel[channel] * 255)
-                    f.write(bytes([value]))
+                    f.write(value)
 
 def save_batch_of_cropped_and_normalized_images(images, file_path):
     with open(file_path, 'wb') as f:
         for image in images:
-            normalized_pixels = crop_and_normalize_image(image)
+            normalized_image = crop_and_normalize_image(image)
             f.write(bytes([image.label]))
-            for channel in range(3):
-                for row in normalized_pixels:
-                    for pixel in row:
-                        value = int(pixel[channel] * 255)
-                        f.write(bytes([value]))
+            for row in normalized_image.pixels:
+                for pixel in row:
+                    for channel_value in pixel:
+                        f.write(struct.pack('<f', float(channel_value)))
+
+
+def load_batch_of_cropped_and_normalized_images(file_path):
+    images = []
+    with open(file_path, 'rb') as f:
+        while True:
+            label_byte = f.read(1)
+            if not label_byte:
+                break
+            label = label_byte[0]
+            pixels = []
+            for i in range(24):
+                row = []
+                for j in range(24):
+                    r_bytes = f.read(4)
+                    g_bytes = f.read(4)
+                    b_bytes = f.read(4)
+                    r = struct.unpack('<f', r_bytes)[0]
+                    g = struct.unpack('<f', g_bytes)[0]
+                    b = struct.unpack('<f', b_bytes)[0]
+                    row.append((r, g, b))
+                pixels.append(row)
+            images.append(Image(label, pixels))
+    return images
