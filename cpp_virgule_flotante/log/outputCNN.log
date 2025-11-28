@@ -1,0 +1,9 @@
+[ OK ] matrix2D sizeof == R*C*sizeof(data_t)
+[ OK ] matrix2D indexing preserves written values
+[ OK ] matrix3D sizeof == D*R*C*sizeof(data_t)
+[ OK ] matrix3D indexing returns expected values
+[ OK ] matrix3D memory is contiguous (row-major)
+[ OK ] matrix4D sizeof == B*D*R*C*sizeof(data_t)
+[ OK ] matrix4D indexing returns expected values
+[ OK ] matrix4D memory is contiguous (row-major)
+All CNN alias tests PASSED.

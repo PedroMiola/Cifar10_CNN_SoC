@@ -15,7 +15,7 @@ target_link_libraries(cnn PRIVATE cnn_floating)
 target_include_directories(cnn PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 enable_testing()
-file(GLOB TEST_FILES CONFIGURE_DEPENDS tests/*.cpp)
+file(GLOB TEST_FILES CONFIGURE_DEPENDS test/*.cpp)
 foreach(TEST_FILE ${TEST_FILES})
     get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
     add_executable(${TEST_NAME} ${TEST_FILE})
