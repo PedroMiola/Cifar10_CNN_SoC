@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 #include <cstddef>
-
+#include <iostream>
 
 int main() {
     std::ofstream log("../log/outputCNN.log");

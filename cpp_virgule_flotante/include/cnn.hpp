@@ -1,12 +1,13 @@
 #ifndef CNN_HPP
 #define CNN_HPP
 
-#include <iostream>
+#include <cstddef>
+#include <cstdint>
 
 #define data_t float
 #define label_t uint8_t
-#define IMAGE_HEIGHT 28
-#define IMAGE_WIDTH 28
+#define IMAGE_HEIGHT 24
+#define IMAGE_WIDTH 24
 #define IMAGE_CHANNELS 3
 
 template<std::size_t Rows, std::size_t Cols>
@@ -25,6 +26,5 @@ struct LabeledImage {
     image_t<Channels, Height, Width> img;
     label_t label;
 };
-   
 
 #endif // CNN_HPP
