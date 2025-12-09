@@ -1,3 +1,5 @@
 **/_*/
 cpp_virgule_flotante/build/*
 cpp_virgule_flotante/log/*
+cpp_virgule_fixe/build/*
+cpp_virgule_fixe/log/*
