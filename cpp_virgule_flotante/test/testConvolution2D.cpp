@@ -181,13 +181,10 @@ int main(){
 
         matrix2D<H, W> output{};
         convolve2d<H, W, KH, KW>(input, kernel, output);
-        
+
         bool match = matricesEqual(output, expected_output);
         logExpect(match, failures, log, "T3: 3x3 kernel on large 25x25 input");
     }
-
-
-
 
     if (failures == 0) log << "";
     else log << failures << "";

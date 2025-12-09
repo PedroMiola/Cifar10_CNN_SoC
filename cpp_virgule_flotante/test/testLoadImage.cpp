@@ -11,7 +11,6 @@
 
 // Helper: deterministic integer-valued pixels (exact for float)
 static inline data_t mkpix(std::size_t img, int ch, std::size_t h, std::size_t w) {
-    // distinct blocks per channel: 10k, 20k, 30k + per-image 1000*img + row*100 + col
     const int base = (ch + 1) * 10000;
     return static_cast<data_t>(base + static_cast<int>(img) * 1000 + static_cast<int>(h) * 100 + static_cast<int>(w));
 }
