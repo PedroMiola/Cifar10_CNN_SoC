@@ -278,10 +278,10 @@ def export_tensors_to_header(tensor_list, header_path: str,
     header_path.write_text("\n".join(lines), encoding="utf-8")
 
 
-out = read_coefficients('../cifar10_coeffs/CNN_coeff_3x3.txt', as_numpy=True)
-export_tensors_to_header(
-    out,
-    header_path='../cpp_virgule_flotante/include/cnn_coefficients.hpp',
-    namespace='cnn_coefficients',
-    dtype='float'
-)
+#out = read_coefficients('../cifar10_coeffs/CNN_coeff_3x3.txt', as_numpy=True)
+#export_tensors_to_header(
+#    out,
+#    header_path='../cpp_virgule_flotante/include/cnn_coefficients.hpp',
+#    namespace='cnn_coefficients',
+#    dtype='float'
+#)

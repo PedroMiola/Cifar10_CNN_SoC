@@ -1,12 +1,15 @@
 #include "../include/cnn_top_level.hpp"
 #include "../include/loadImage.hpp"
 
-#include <iostream>
-
-int main() {
+// Receive number of test images in command line argument
+int main(int argc, char* argv[]) {
 
     std::string img_files = "../../cifar-10-binary/cifar-10-batches-cropped-bin/test_batch.bin";
-    const std::size_t num_test_images = 1000;
+    // Number of test images in the CIFAR-10 test batch in command line argument
+    std::size_t num_test_images = 10000;
+    if (argc > 1) {
+        num_test_images = static_cast<std::size_t>(std::stoi(argv[1]));
+    } 
 
     LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>* test_images = new LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>[num_test_images];
     loadImagesFromFile(img_files, test_images, num_test_images);
