@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 
 nb = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-path = '../cifar-10-binary/cifar-10-batches-bin/data_batch_1.bin'
+path = '../cifar-10-binary/cifar-10-batches-bin/test_batch.bin'
 images = image_reader.read_batch_file(path)
 first_image = images[nb]
 output_path = '../cifar-10-binary/cifar-10-batches-bin/cropped_normalized_image.bin'
@@ -24,10 +24,7 @@ axes[1].axis('off')
 plt.tight_layout()
 plt.show()
 
-# Print middle 5x5 pixels of original and normalized images
-print("Original Image Middle 5x5 Pixels:")
-for row in range(12, 17):
-    print(first_image.pixels[row][12:17])
-print("\nCropped & Normalized Image Middle 5x5 Pixels:")
-for row in range(12, 17):
-    print(first_image_normalized.pixels[row][12:17])
+# Print pixel values of the cropped and normalized image for verification
+print("Cropped and Normalized Pixels (first 5x5):")
+for row in first_image_normalized.pixels[:5]:
+    print(row[:5])

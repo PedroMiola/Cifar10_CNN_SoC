@@ -106,6 +106,28 @@ int main() {
         logExpect(thirdUntouched, failures, log, "Does not write beyond numImages");
     }
 
+    {
+        const std::string bin_path = "../../cifar-10-binary/cifar-10-batches-cropped-bin/test_batch.bin";
+        const std::size_t num_images = 10000;
+
+        LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>* images = new LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>[num_images];
+        loadImagesFromFile(bin_path, images, num_images);
+
+        // Print first 5x5 image pixel values for visual inspection
+        log << "First image label: " << static_cast<int>(images[0].label) << "\n";
+        log << "First image pixels (first 5x5 of each channel):\n";
+        for (int ch = 0; ch < IMAGE_CHANNELS; ++ch) {
+            log << "Channel " << ch << ":\n";
+            for (std::size_t h = 0; h < 5; ++h) {
+                for (std::size_t w = 0; w < 5; ++w) {
+                    log << images[0].img[ch][h][w] << " ";
+                }
+                log << "\n";
+            }
+        }  
+        delete[] images;
+    }
+
     std::filesystem::remove("../log/images_k1.bin");
     std::filesystem::remove("../log/images_k2.bin");
     std::filesystem::remove("../log/images_k3.bin");
