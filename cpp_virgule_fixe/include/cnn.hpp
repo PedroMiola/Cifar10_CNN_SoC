@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
+#include <iomanip>
 
 #define data_t float
 #define label_t uint8_t
@@ -26,5 +28,50 @@ struct LabeledImage {
     image_t<Channels, Height, Width> img;
     label_t label;
 };
+
+// Print matrix functinon for debugging
+template<std::size_t H, std::size_t W>
+void printMatrix2D(const matrix2D<H, W>& mat) {
+    for (std::size_t i = 0; i < H; ++i) {
+        for (std::size_t j = 0; j < W; ++j) {
+            std::cout << std::fixed << std::setprecision(6) << mat[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+// Print only 4 decimal places
+template<std::size_t InC, std::size_t H, std::size_t W>
+void printMatrix3D(const matrix3D<InC, H, W>& mat) {
+    for (std::size_t c = 0; c < InC; ++c) {
+        std::cout << "Channel " << c << ":\n";
+        for (std::size_t i = 0; i < H; ++i) {
+            for (std::size_t j = 0; j < W; ++j) {
+                // Print 4 decimal places
+                std::cout << std::fixed << std::setprecision(4) << mat[c][i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+}
+
+template<std::size_t Blocks, std::size_t InC, std::size_t H, std::size_t W>
+void printMatrix4D(const matrix4D<Blocks, InC, H, W>& mat) {
+    for (std::size_t b = 0; b < Blocks; ++b) {
+        std::cout << "Block " << b << ":\n";
+        for (std::size_t c = 0; c < InC; ++c) {
+            std::cout << " Channel " << c << ":\n";
+            for (std::size_t i = 0; i < H; ++i) {
+                for (std::size_t j = 0; j < W; ++j) {
+                    std::cout << std::fixed << std::setprecision(6) << mat[b][c][i][j] << " ";
+                }
+                std::cout << std::endl;
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+}
 
 #endif // CNN_HPP

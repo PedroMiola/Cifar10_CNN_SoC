@@ -11,7 +11,6 @@
 
 // Helper: deterministic integer-valued pixels (exact for float)
 static inline data_t mkpix(std::size_t img, int ch, std::size_t h, std::size_t w) {
-    // distinct blocks per channel: 10k, 20k, 30k + per-image 1000*img + row*100 + col
     const int base = (ch + 1) * 10000;
     return static_cast<data_t>(base + static_cast<int>(img) * 1000 + static_cast<int>(h) * 100 + static_cast<int>(w));
 }
@@ -105,6 +104,28 @@ int main() {
 
         logExpect(firstTwoOK, failures, log, "Loads exactly numImages (first two match)");
         logExpect(thirdUntouched, failures, log, "Does not write beyond numImages");
+    }
+
+    {
+        const std::string bin_path = "../../cifar-10-binary/cifar-10-batches-cropped-bin/test_batch.bin";
+        const std::size_t num_images = 10000;
+
+        LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>* images = new LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>[num_images];
+        loadImagesFromFile(bin_path, images, num_images);
+
+        // Print first 5x5 image pixel values for visual inspection
+        log << "First image label: " << static_cast<int>(images[0].label) << "\n";
+        log << "First image pixels (first 5x5 of each channel):\n";
+        for (int ch = 0; ch < IMAGE_CHANNELS; ++ch) {
+            log << "Channel " << ch << ":\n";
+            for (std::size_t h = 0; h < 5; ++h) {
+                for (std::size_t w = 0; w < 5; ++w) {
+                    log << images[0].img[ch][h][w] << " ";
+                }
+                log << "\n";
+            }
+        }  
+        delete[] images;
     }
 
     std::filesystem::remove("../log/images_k1.bin");

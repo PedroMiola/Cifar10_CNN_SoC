@@ -3,9 +3,14 @@
 
 #include "../include/cnn.hpp"
 
-template<std::size_t channels, std::size_t rows, std::size_t cols,
-         std::size_t size = 3, std::size_t stride = 2,
-         std::size_t out_rows, std::size_t out_cols>
+template<   std::size_t channels, 
+            std::size_t rows, 
+            std::size_t cols,
+            std::size_t size = 3, 
+            std::size_t stride = 2,
+            std::size_t out_rows, 
+            std::size_t out_cols
+>
 
 void maxpool(matrix3D<channels, rows, cols> matrix, matrix3D<channels, out_rows, out_cols> &out_mtx) {
 
