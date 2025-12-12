@@ -17,14 +17,20 @@ void loadImagesFromFile(const std::string& filepath, LabeledImage<IMAGE_CHANNELS
         data_t imgRedData[IMAGE_HEIGHT][IMAGE_WIDTH];
         data_t imgGreenData[IMAGE_HEIGHT][IMAGE_WIDTH];
         data_t imgBlueData[IMAGE_HEIGHT][IMAGE_WIDTH];
+        float tmpImgRedData[IMAGE_HEIGHT][IMAGE_WIDTH];
+        float tmpImgGreenData[IMAGE_HEIGHT][IMAGE_WIDTH];
+        float tmpImgBlueData[IMAGE_HEIGHT][IMAGE_WIDTH];
         // Read label
         file.read(reinterpret_cast<char*>(&label), sizeof(label_t));
         // Read image data pyxel by pixel
         for(std::size_t h = 0; h < IMAGE_HEIGHT; ++h) {
             for(std::size_t w = 0; w < IMAGE_WIDTH; ++w) {
-                file.read(reinterpret_cast<char*>(&imgRedData[h][w]), sizeof(data_t));
-                file.read(reinterpret_cast<char*>(&imgGreenData[h][w]), sizeof(data_t));
-                file.read(reinterpret_cast<char*>(&imgBlueData[h][w]), sizeof(data_t));
+                file.read(reinterpret_cast<char*>(&tmpImgRedData[h][w]), sizeof(float));
+                file.read(reinterpret_cast<char*>(&tmpImgGreenData[h][w]), sizeof(float));
+                file.read(reinterpret_cast<char*>(&tmpImgBlueData[h][w]), sizeof(float));
+                imgRedData[h][w] = (tmpImgRedData[h][w]);
+                imgGreenData[h][w] = (tmpImgGreenData[h][w]);
+                imgBlueData[h][w] = (tmpImgBlueData[h][w]);
             }
         }
 

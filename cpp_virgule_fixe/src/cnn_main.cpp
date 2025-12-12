@@ -9,12 +9,16 @@ int main(int argc, char* argv[]) {
     std::size_t num_test_images = 10000;
     if (argc > 1) {
         num_test_images = static_cast<std::size_t>(std::stoi(argv[1]));
-    } 
+    }
+    
+    // 5% of test images for printing purpose
+    std::size_t num_print_images = num_test_images / 20;
 
     LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>* test_images = new LabeledImage<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>[num_test_images];
     loadImagesFromFile(img_files, test_images, num_test_images);
 
     std::size_t correct_predictions = 0;
+    std::size_t count = 0;
 
     for(std::size_t i = 0; i < num_test_images; ++i){
 
@@ -36,12 +40,16 @@ int main(int argc, char* argv[]) {
         if (predicted_label == test_images[i].label) {
             ++correct_predictions;
         }   
-        //std::cout << "Image " << i << ": True label = " << static_cast<int>(test_images[i].label)
-        //          << ", Predicted label = " << predicted_label << std::endl;
+
+        //std::cout << "Image " << i << ": True label = " << static_cast<int>(test_images[i].label) << ", Predicted label = " << predicted_label << std::endl;
+
+        if (!(i % num_print_images)){
+            //std::cout << "Processed " << ++count * (5) << "% of test images." << std::endl;
+        }
     }
 
     // Calculate and print accuracy
-    data_t accuracy = static_cast<data_t>(correct_predictions) / static_cast<data_t>(num_test_images);
+    float accuracy = static_cast<float>(correct_predictions) / static_cast<float>(num_test_images);
     std::cout << "Accuracy: " << accuracy * 100.0 << "%" << std::endl;  
 
     return 0;

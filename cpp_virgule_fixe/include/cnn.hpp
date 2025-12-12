@@ -5,8 +5,10 @@
 #include <cstdint>
 #include <iostream>
 #include <iomanip>
-
-#define data_t float
+#include "lib/ac_fixed.h"
+#include "lib/ac_int.h"
+    
+#define data_t ac_fixed<32,16,true>
 #define label_t uint8_t
 #define IMAGE_HEIGHT 24
 #define IMAGE_WIDTH 24
@@ -40,15 +42,13 @@ void printMatrix2D(const matrix2D<H, W>& mat) {
     }
 }
 
-// Print only 4 decimal places
 template<std::size_t InC, std::size_t H, std::size_t W>
 void printMatrix3D(const matrix3D<InC, H, W>& mat) {
     for (std::size_t c = 0; c < InC; ++c) {
         std::cout << "Channel " << c << ":\n";
         for (std::size_t i = 0; i < H; ++i) {
             for (std::size_t j = 0; j < W; ++j) {
-                // Print 4 decimal places
-                std::cout << std::fixed << std::setprecision(4) << mat[c][i][j] << " ";
+                std::cout  << mat[c][i][j] << " ";
             }
             std::cout << std::endl;
         }

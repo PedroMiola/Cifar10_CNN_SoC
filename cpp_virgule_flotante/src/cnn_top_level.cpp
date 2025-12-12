@@ -109,9 +109,9 @@ void fourthLayer(
     if (debug_4th_layer) {
         printf("Fourth Layer Perceptron End\n");
         for (std::size_t i = 0; i < 10; ++i) {
-            printf("%.4f ", output_logits[i]);
+            std::cout << std::fixed << std::setprecision(4) << output_logits[i] << " ";
         }
-        printf("\n");
+        std::cout << std::endl;
     }
 }
 
