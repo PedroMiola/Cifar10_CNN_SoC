@@ -1,4 +1,4 @@
-#include "../include/cnn_top_level.hpp"
+#include "../include/cnn_top_level.hh"
 
 const char debug_1st_layer = false;
 const char debug_2nd_layer = false;

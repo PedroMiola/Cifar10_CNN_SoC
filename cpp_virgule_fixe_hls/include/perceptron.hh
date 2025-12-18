@@ -1,7 +1,7 @@
 #ifndef PERCEPTRON_HPP
 #define PERCEPTRON_HPP
 
-#include "cnn.hpp"
+#include "cnn.hh"
 
 inline void perceptron(const data_t input_vector[180], data_t output_vector[10], const data_t weights[180][10], const data_t biases[10]) {
     for (int j = 0; j < 10; ++j) { // for each output neuron

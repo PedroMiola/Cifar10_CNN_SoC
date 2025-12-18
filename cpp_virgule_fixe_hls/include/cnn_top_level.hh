@@ -1,12 +1,12 @@
 #ifndef CNN_TOP_LEVEL_HPP
 #define CNN_TOP_LEVEL_HPP
 
-#include "../include/cnn.hpp"
-#include "../include/convolution.hpp"
-#include "../include/cnn_coefficients.hpp"
-#include "../include/maxpool.hpp"
-#include "../include/reshape.hpp"
-#include "../include/perceptron.hpp"
+#include "../include/cnn.hh"
+#include "../include/convolution.hh"
+#include "../include/cnn_coefficients.hh"
+#include "../include/maxpool.hh"
+#include "../include/reshape.hh"
+#include "../include/perceptron.hh"
 
 void firstLayer(
     const image_t<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>& input_image,

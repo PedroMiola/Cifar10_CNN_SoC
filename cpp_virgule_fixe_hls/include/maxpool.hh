@@ -1,7 +1,7 @@
 #ifndef MAX_HPP
 #define MAX_HPP
 
-#include "../include/cnn.hpp"
+#include "../include/cnn.hh"
 
 template<   int channels, 
             int rows, 

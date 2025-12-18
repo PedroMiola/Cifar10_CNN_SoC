@@ -1,7 +1,7 @@
 #ifndef CONVOLUTION_HPP
 #define CONVOLUTION_HPP
 
-#include "cnn.hpp"
+#include "cnn.hh"
 
 inline data_t relu(data_t x) {return x > static_cast<data_t>(0) ? x : static_cast<data_t>(0);}
 
