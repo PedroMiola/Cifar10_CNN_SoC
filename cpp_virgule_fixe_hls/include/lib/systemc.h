@@ -100,7 +100,7 @@
 //  from <cstdio>:
 
 #   if !defined( _MSC_VER )
-        using std::size_t;
+        using int;
         using std::FILE;
         using std::fpos_t;
 	using std::fclose;

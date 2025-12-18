@@ -95,7 +95,7 @@ void fourthLayer(
     reshape(input_feature_maps, input_feature_vector);
     if (debug_4th_layer) {
         printf("Fourth Layer Reshape End\n");
-        for (std::size_t i = 0; i < 180; ++i) {
+        for (int i = 0; i < 180; ++i) {
             std::cout << std::fixed << std::setprecision(4) << input_feature_vector[i] << " ";
         }
         std::cout << std::endl;
@@ -108,7 +108,7 @@ void fourthLayer(
     );
     if (debug_4th_layer) {
         printf("Fourth Layer Perceptron End\n");
-        for (std::size_t i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             std::cout << std::fixed << std::setprecision(4) << output_logits[i] << "";
         }
         std::cout << std::endl;

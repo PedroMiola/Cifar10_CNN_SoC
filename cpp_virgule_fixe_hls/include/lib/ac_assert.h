@@ -87,11 +87,11 @@ namespace ac {
         for (std::map<std::string,int>::iterator pos=begin(); pos!=end(); ++pos) {
           if ( (*pos).second == 0) {
             std::string key((*pos).first);
-            std::size_t endstack = 0;
+            int endstack = 0;
             #ifdef AC_COVER_USES_STACK
             endstack = key.find_first_of(":")+1;
             #endif
-            std::size_t brace = key.find_first_of("{",endstack);
+            int brace = key.find_first_of("{",endstack);
             printf("%s: MISSED COVERAGE\n", key.substr(endstack,brace-1).c_str());
           }
         }

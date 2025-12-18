@@ -9,8 +9,8 @@ inline data_t relu(data_t x) {return x > static_cast<data_t>(0) ? x : static_cas
 // - input  : [Height][Width]
 // - kernel : [KHeight][KWidth]
 // - output : [Height][Width]  (same spatial size as input)
-template<std::size_t Height, std::size_t Width,
-         std::size_t KHeight, std::size_t KWidth>
+template<int Height, int Width,
+         int KHeight, int KWidth>
 void convolve2d(
     const matrix2D<Height, Width>   &input,
     const matrix2D<KHeight, KWidth> &kernel,
@@ -19,13 +19,13 @@ void convolve2d(
     constexpr int pad_h = static_cast<int>(KHeight) / 2;
     constexpr int pad_w = static_cast<int>(KWidth) / 2;
 
-    for (std::size_t row = 0; row < Height; ++row) {
-        for (std::size_t col = 0; col < Width; ++col) {
+    for (int row = 0; row < Height; ++row) {
+        for (int col = 0; col < Width; ++col) {
 
             data_t conv_sum = static_cast<data_t>(0); // float
 
-            for (std::size_t ki = 0; ki < KHeight; ++ki) {
-                for (std::size_t kj = 0; kj < KWidth; ++kj) {
+            for (int ki = 0; ki < KHeight; ++ki) {
+                for (int kj = 0; kj < KWidth; ++kj) {
 
                     int mi = static_cast<int>(row) + static_cast<int>(ki) - pad_h;
                     int mj = static_cast<int>(col) + static_cast<int>(kj) - pad_w;
@@ -49,12 +49,12 @@ void convolve2d(
 // - kernel : [KHeight][KWidth][InC][OutC]
 // - bias   : [OutC]
 // - output : [OutC][Height][Width]  (same H, W as input)
-template<std::size_t InC,
-         std::size_t Height,
-         std::size_t Width,
-         std::size_t KHeight,
-         std::size_t KWidth,
-         std::size_t OutC>
+template<int InC,
+         int Height,
+         int Width,
+         int KHeight,
+         int KWidth,
+         int OutC>
 void convolve3d_4d(
     const matrix3D<InC, Height, Width>           &input,
     const matrix4D<KHeight, KWidth, InC, OutC>   &kernel,
@@ -69,24 +69,24 @@ void convolve3d_4d(
     matrix2D<KHeight, KWidth> kernel_slice;
 
     // For each output channel
-    for (std::size_t out_c = 0; out_c < OutC; ++out_c) {
+    for (int out_c = 0; out_c < OutC; ++out_c) {
 
-        for (std::size_t i = 0; i < Height; ++i) {
-            for (std::size_t j = 0; j < Width; ++j) {
+        for (int i = 0; i < Height; ++i) {
+            for (int j = 0; j < Width; ++j) {
                 matrix_sum[i][j] = static_cast<data_t>(0);
             }
         }
 
-        for (std::size_t in_c = 0; in_c < InC; ++in_c) {
+        for (int in_c = 0; in_c < InC; ++in_c) {
 
-            for (std::size_t i = 0; i < Height; ++i) {
-                for (std::size_t j = 0; j < Width; ++j) {
+            for (int i = 0; i < Height; ++i) {
+                for (int j = 0; j < Width; ++j) {
                     channel_matrix[i][j] = input[in_c][i][j];
                 }
             }
 
-            for (std::size_t ki = 0; ki < KHeight; ++ki) {
-                for (std::size_t kj = 0; kj < KWidth; ++kj) {
+            for (int ki = 0; ki < KHeight; ++ki) {
+                for (int kj = 0; kj < KWidth; ++kj) {
                     kernel_slice[ki][kj] = kernel[ki][kj][in_c][out_c];
                 }
             }
@@ -95,15 +95,15 @@ void convolve3d_4d(
                 channel_matrix, kernel_slice, conv_result
             );
 
-            for (std::size_t i = 0; i < Height; ++i) {
-                for (std::size_t j = 0; j < Width; ++j) {
+            for (int i = 0; i < Height; ++i) {
+                for (int j = 0; j < Width; ++j) {
                     matrix_sum[i][j] += conv_result[i][j];
                 }
             }
         }
 
-        for (std::size_t i = 0; i < Height; ++i) {
-            for (std::size_t j = 0; j < Width; ++j) {
+        for (int i = 0; i < Height; ++i) {
+            for (int j = 0; j < Width; ++j) {
                 data_t value = matrix_sum[i][j] + bias[out_c];
                 output[out_c][i][j] = relu(value);
             }
