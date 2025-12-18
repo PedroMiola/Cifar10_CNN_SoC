@@ -7,8 +7,8 @@
 #include <iomanip>
 #include "lib/ac_fixed.h"
 #include "lib/ac_int.h"
+#include "data.hpp"
     
-#define data_t ac_fixed<32,16,true>
 #define label_t uint8_t
 #define IMAGE_HEIGHT 24
 #define IMAGE_WIDTH 24

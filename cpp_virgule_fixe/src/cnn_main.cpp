@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
 
     // Calculate and print accuracy
     float accuracy = static_cast<float>(correct_predictions) / static_cast<float>(num_test_images);
-    std::cout << "Accuracy: " << accuracy * 100.0 << "%" << std::endl;  
+    std::cout << /*"Accuracy: " <<*/ accuracy * 100.0; //<< "%" << std::endl;  
 
     return 0;
 }
