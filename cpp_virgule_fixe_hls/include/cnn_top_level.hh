@@ -1,5 +1,5 @@
-#ifndef CNN_TOP_LEVEL_HPP
-#define CNN_TOP_LEVEL_HPP
+#ifndef CNN_TOP_LEVEL_hh
+#define CNN_TOP_LEVEL_hh
 
 #include "../include/cnn.hh"
 #include "../include/convolution.hh"
@@ -30,7 +30,7 @@ void fourthLayer(
 
 void cnn_top_level(
     const image_t<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>& input_image,
-    data_t output_logits[10]
+    label_t& output_label
 );
 
-#endif // CNN_TOP_LEVEL_HPP
+#endif // CNN_TOP_LEVEL_hh

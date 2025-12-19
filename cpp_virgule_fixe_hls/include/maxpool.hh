@@ -43,4 +43,3 @@ void maxpool(matrix3D<channels, rows, cols> matrix, matrix3D<channels, out_rows,
 }
 
 #endif // MAX_HPP
-

@@ -31,7 +31,7 @@ void fourthLayer(
 
 void cnn_top_level(
     const image_t<IMAGE_CHANNELS, IMAGE_HEIGHT, IMAGE_WIDTH>& input_image,
-    data_t output_logits[10]
+    label_t& output_label
 );
 
 #endif // CNN_TOP_LEVEL_HPP
